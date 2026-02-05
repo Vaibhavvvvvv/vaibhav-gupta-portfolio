@@ -144,23 +144,29 @@ const Badge = ({
 	className?: string;
 }) => (
 	<span
-		className={`inline-flex items-center rounded-md border border-zinc-200 px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 dark:border-zinc-800 dark:focus:ring-zinc-300 bg-zinc-100 text-zinc-900 hover:bg-zinc-100/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80 ${className}`}
+		className={`inline-flex items-center rounded-md border border-zinc-200 px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 dark:border-zinc-800 dark:focus:ring-zinc-300 bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-700 cursor-default ${className}`}
 	>
 		{children}
 	</span>
 );
+
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 const Button = ({
 	children,
 	variant = "primary",
 	className,
 	...props
-}: any) => {
+}: {
+	children: ReactNode;
+	variant?: "primary" | "outline" | "ghost";
+	className?: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>) => {
 	const baseStyles =
-		"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 h-10 px-4 py-2";
+		"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 h-10 px-4 py-2 cursor-pointer";
 	const variants = {
 		primary:
-			"bg-zinc-900 text-zinc-50 hover:bg-zinc-900/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90",
+			"bg-zinc-900 text-zinc-50 hover:bg-zinc-900/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90 shadow-sm",
 		outline:
 			"border border-zinc-200 bg-white hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50",
 		ghost:
@@ -186,29 +192,26 @@ const FloatingDock = ({
 	toggleTheme: () => void;
 }) => {
 	return (
-		<div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 bg-white/80 p-2 shadow-xl backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/80">
+		<div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 rounded-full border border-zinc-200 bg-white/90 p-2.5 shadow-2xl backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/90">
 			{/* Home */}
 			<Button
 				variant="ghost"
-				className="h-10 w-10 rounded-full p-0 hover:scale-110 transition-transform duration-200"
+				className="h-12 w-12 rounded-full p-0 hover:scale-110 transition-transform duration-200"
 				onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 			>
-				<Home
-					size={30}
-					className="text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
-				/>
+				<Home className="h-6 w-6 text-zinc-600 dark:text-zinc-400" />
 			</Button>
 
 			{/* Divider */}
-			<div className="h-6 w-px bg-zinc-200 dark:bg-zinc-800 mx-1"></div>
+			<div className="h-6 w-px bg-zinc-200 dark:bg-zinc-800"></div>
 
-			{/* Socials */}
+			{/* Socials - Filled Icons */}
 			<a href={PORTFOLIO_DATA.personal.github} target="_blank" rel="noreferrer">
 				<Button
 					variant="ghost"
-					className="h-10 w-10 rounded-full p-0 hover:scale-110 transition-transform duration-200"
+					className="h-12 w-12 rounded-full p-0 hover:scale-110 transition-transform duration-200"
 				>
-					<Github className="h-5 w-5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50" />
+					<Github className="h-6 w-6 text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white" />
 				</Button>
 			</a>
 			<a
@@ -218,26 +221,26 @@ const FloatingDock = ({
 			>
 				<Button
 					variant="ghost"
-					className="h-10 w-10 rounded-full p-0 hover:scale-110 transition-transform duration-200"
+					className="h-12 w-12 rounded-full p-0 hover:scale-110 transition-transform duration-200"
 				>
-					<Linkedin className="h-5 w-5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50" />
+					<Linkedin className="h-6 w-6 text-zinc-600 hover:text-[#0077b5] dark:text-zinc-400 dark:hover:text-[#0077b5]" />
 				</Button>
 			</a>
-			<a
+			{/* <a
 				href={PORTFOLIO_DATA.personal.twitter}
 				target="_blank"
 				rel="noreferrer"
 			>
 				<Button
 					variant="ghost"
-					className="h-10 w-10 rounded-full p-0 hover:scale-110 transition-transform duration-200"
+					className="h-12 w-12 rounded-full p-0 hover:scale-110 transition-transform duration-200"
 				>
-					<Twitter className="h-4 w-4 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50" />
+					<Twitter className="h-6 w-6 text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-white" />
 				</Button>
-			</a>
+			</a> */}
 
 			{/* Divider */}
-			<div className="h-6 w-px bg-zinc-200 dark:bg-zinc-800 mx-1"></div>
+			<div className="h-6 w-px bg-zinc-200 dark:bg-zinc-800"></div>
 
 			{/* Resume with Tooltip */}
 			<div className="relative group">
@@ -248,13 +251,13 @@ const FloatingDock = ({
 				>
 					<Button
 						variant="ghost"
-						className="h-10 w-10 rounded-full p-0 hover:scale-110 transition-transform duration-200 bg-zinc-50 dark:bg-zinc-800/50"
+						className="h-12 w-12 rounded-full p-0 hover:scale-110 transition-transform duration-200 bg-zinc-100 dark:bg-zinc-800"
 					>
-						<FileText className="h-5 w-5 text-zinc-900 dark:text-zinc-50" />
+						<FileText className="h-6 w-6 text-zinc-900 dark:text-zinc-50" />
 					</Button>
 				</a>
 				{/* Tooltip */}
-				<div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-lg">
+				<div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-semibold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-xl">
 					Resume
 					{/* Arrow */}
 					<div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-900 dark:bg-zinc-100 rotate-45"></div>
@@ -262,18 +265,18 @@ const FloatingDock = ({
 			</div>
 
 			{/* Divider */}
-			<div className="h-6 w-px bg-zinc-200 dark:bg-zinc-800 mx-1"></div>
+			<div className="h-6 w-px bg-zinc-200 dark:bg-zinc-800"></div>
 
 			{/* Theme Toggle */}
 			<Button
 				variant="ghost"
-				className="h-10 w-10 rounded-full p-0 hover:scale-110 transition-transform duration-200"
+				className="h-12 w-12 rounded-full p-0 hover:scale-110 transition-transform duration-200"
 				onClick={toggleTheme}
 			>
 				{isDarkMode ? (
-					<Sun className="h-5 w-5 text-orange-400 hover:text-orange-500" />
+					<Sun className="h-6 w-6 text-orange-400" />
 				) : (
-					<Moon className="h-5 w-5 text-zinc-500 hover:text-zinc-900" />
+					<Moon className="h-6 w-6 text-zinc-600" />
 				)}
 			</Button>
 		</div>
@@ -298,90 +301,97 @@ export default function Portfolio() {
 
 	return (
 		<div
-			className={`min-h-screen font-sans bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 transition-colors duration-300 pb-24`}
+			className={`min-h-screen font-sans bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 transition-colors duration-300 pb-32`}
 		>
 			{/* Floating Navbar Replaces Top Toggle */}
 			<FloatingDock isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 
-			<main className="max-w-2xl mx-auto px-6 py-16 sm:py-24 space-y-20">
+			<main className="max-w-2xl mx-auto px-6 py-20 space-y-24">
 				{/* --- Hero Section --- */}
-				<section className="space-y-6">
-					<div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-6">
-						<div className="space-y-2">
-							<h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-								hi, I'm {PORTFOLIO_DATA.personal.name}
+				<section className="space-y-8">
+					<div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-8">
+						<div className="space-y-4">
+							<h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
+								hi, I&#39;m {PORTFOLIO_DATA.personal.name}
 							</h1>
-							<p className="text-lg font-medium text-zinc-600 dark:text-zinc-400">
-								{PORTFOLIO_DATA.personal.role}
-							</p>
-							<p className="text-sm text-zinc-500 dark:text-zinc-500 max-w-sm">
-								{PORTFOLIO_DATA.personal.tagline}
-							</p>
+							<div className="space-y-1">
+								<p className="text-xl font-medium text-zinc-900 dark:text-zinc-100">
+									{PORTFOLIO_DATA.personal.role}
+								</p>
+								<p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 max-w-sm">
+									{PORTFOLIO_DATA.personal.tagline}
+								</p>
+							</div>
 						</div>
-						<div className="relative shrink-0">
-							<Image
-								src={PORTFOLIO_DATA.personal.avatar}
-								alt="Profile"
-								width={100}
-								height={100}
-								className="rounded-full border-2 border-zinc-100 dark:border-zinc-800 shadow-sm"
-							/>
-							<div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-zinc-950"></div>
+						<div className="relative shrink-0 group">
+							<div className="relative w-28 sm:h-32 sm:w-32 rounded-full overflow-hidden border-4 border-zinc-100 dark:border-zinc-800 shadow-lg transition-transform duration-300 group-hover:scale-105">
+								<Image
+									src={PORTFOLIO_DATA.personal.avatar}
+									alt="Profile"
+									fill
+									className="object-cover"
+									priority
+								/>
+							</div>
+							<div className="absolute bottom-2 right-2 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-zinc-950 shadow-sm animate-pulse"></div>
 						</div>
 					</div>
 
 					{/* About */}
-					<div className="space-y-2">
-						<h2 className="text-xl font-semibold tracking-tight">About</h2>
-						<p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm sm:text-base">
+					<div className="space-y-3">
+						<h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+							About
+						</h2>
+						<p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-base">
 							{PORTFOLIO_DATA.personal.about}
 						</p>
 					</div>
 				</section>
 
 				{/* --- Work Experience --- */}
-				<section className="space-y-6">
-					<h2 className="text-xl font-semibold tracking-tight">
+				<section className="space-y-8">
+					<h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
 						Work Experience
 					</h2>
-					<div className="space-y-8">
+					<div className="space-y-10">
 						{PORTFOLIO_DATA.experience.map((job, index) => (
 							<div
 								key={index}
-								className="group relative flex gap-4 transition-all"
+								className="group relative flex gap-6 transition-all"
 							>
 								{/* Timeline Line */}
 								{index !== PORTFOLIO_DATA.experience.length - 1 && (
-									<div className="absolute left-[26px] top-12 bottom-[-20px] w-px bg-zinc-200 dark:bg-zinc-800 group-last:hidden"></div>
+									<div className="absolute left-[26px] top-14 bottom-[-30px] w-px bg-zinc-200 dark:bg-zinc-800 group-last:hidden"></div>
 								)}
 
-								<div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center">
+								{/* Logo Container - Perfectly Centered & Fitted */}
+								<div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center z-10">
 									{job.logo ? (
 										<Image
 											src={job.logo}
 											alt={job.company}
-											width={32}
-											height={32}
-											className="object-contain"
+											width={40}
+											height={40}
+											className="object-contain p-1"
 										/>
 									) : (
-										<Briefcase className="h-5 w-5 text-zinc-500" />
+										<Briefcase className="h-6 w-6 text-zinc-500" />
 									)}
 								</div>
 
-								<div className="flex-1 space-y-1">
+								<div className="flex-1 space-y-1.5 pt-1">
 									<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-										<h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
+										<h3 className="font-bold text-zinc-900 dark:text-zinc-100 text-lg">
 											{job.company}
 										</h3>
-										<span className="text-xs text-zinc-500 dark:text-zinc-500 font-mono">
+										<span className="text-xs text-zinc-500 dark:text-zinc-500 font-mono bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
 											{job.period}
 										</span>
 									</div>
-									<p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+									<p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
 										{job.role}
 									</p>
-									<p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pt-1">
+									<p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
 										{job.description}
 									</p>
 								</div>
@@ -391,24 +401,26 @@ export default function Portfolio() {
 				</section>
 
 				{/* --- Education --- */}
-				<section className="space-y-6">
-					<h2 className="text-xl font-semibold tracking-tight">Education</h2>
-					<div className="space-y-4">
+				<section className="space-y-8">
+					<h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+						Education
+					</h2>
+					<div className="space-y-6">
 						{PORTFOLIO_DATA.education.map((edu, index) => (
-							<div key={index} className="flex gap-4">
-								<div className="h-10 w-10 shrink-0 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
-									<GraduationCap className="h-5 w-5 text-zinc-500" />
+							<div key={index} className="flex gap-6 items-start">
+								<div className="h-12 w-12 shrink-0 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center border border-zinc-200 dark:border-zinc-700">
+									<GraduationCap className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />
 								</div>
-								<div className="flex-1">
+								<div className="flex-1 pt-1">
 									<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-										<h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
+										<h3 className="font-bold text-zinc-900 dark:text-zinc-100 text-base">
 											{edu.school}
 										</h3>
-										<span className="text-xs text-zinc-500 font-mono">
+										<span className="text-xs text-zinc-500 font-mono mt-1 sm:mt-0">
 											{edu.period}
 										</span>
 									</div>
-									<p className="text-sm text-zinc-600 dark:text-zinc-400">
+									<p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
 										{edu.degree}
 									</p>
 								</div>
@@ -419,12 +431,14 @@ export default function Portfolio() {
 
 				{/* --- Skills --- */}
 				<section className="space-y-4">
-					<h2 className="text-xl font-semibold tracking-tight">Skills</h2>
+					<h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+						Skills
+					</h2>
 					<div className="flex flex-wrap gap-2">
 						{PORTFOLIO_DATA.skills.map((skill) => (
 							<Badge
 								key={skill}
-								className="px-3 py-1 text-sm font-medium rounded-full cursor-default hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+								className="px-3 py-1.5 text-sm font-medium rounded-lg cursor-default hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all"
 							>
 								{skill}
 							</Badge>
@@ -433,31 +447,28 @@ export default function Portfolio() {
 				</section>
 
 				{/* --- Proof of Work (Projects) --- */}
-				<section className="space-y-6">
-					<div className="flex items-center justify-between">
-						<h2 className="text-xl font-semibold tracking-tight">
+				<section className="space-y-8">
+					<div className="space-y-2">
+						<h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
 							Check out my latest work
 						</h2>
-						<Badge className="bg-zinc-900 text-white dark:bg-white dark:text-zinc-900">
-							Proof of Work
-						</Badge>
+						<p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-[600px]">
+							I&apos;ve worked on scalable backend systems and robust APIs. Here
+							are a few things I&apos;ve built.
+						</p>
 					</div>
 
-					<p className="text-sm text-zinc-500 dark:text-zinc-400 -mt-4">
-						I've worked on scalable backend systems and robust APIs.
-					</p>
-
-					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 						{PORTFOLIO_DATA.projects.map((project, idx) => (
 							<div
 								key={idx}
-								className="group flex flex-col rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 overflow-hidden hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 hover:shadow-md"
+								className="group flex flex-col rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden hover:border-zinc-400 dark:hover:border-zinc-600 transition-all duration-300 hover:shadow-lg cursor-default"
 							>
 								{/* Project Image */}
-								<div className="h-40 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800 relative">
+								<div className="h-44 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800 relative">
 									{project.status === "coming_soon" && (
-										<div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
-											<span className="text-white text-xs font-bold uppercase tracking-wider border border-white px-2 py-1 rounded">
+										<div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center z-10">
+											<span className="text-white text-xs font-bold uppercase tracking-wider border border-white/30 bg-white/10 px-3 py-1.5 rounded-full">
 												Coming Soon
 											</span>
 										</div>
@@ -467,25 +478,27 @@ export default function Portfolio() {
 										alt={project.title}
 										width={500}
 										height={300}
-										className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${project.status === "coming_soon" ? "blur-sm" : ""}`}
+										className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${project.status === "coming_soon" ? "blur-sm" : ""}`}
 									/>
 								</div>
 
 								{/* Project Content */}
-								<div className="flex flex-col flex-1 p-4 space-y-3">
-									<h3 className="font-semibold text-zinc-900 dark:text-zinc-100">
-										{project.title}
-									</h3>
-									<p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-3">
-										{project.description}
-									</p>
+								<div className="flex flex-col flex-1 p-5 space-y-4">
+									<div className="space-y-2">
+										<h3 className="font-bold text-zinc-900 dark:text-zinc-100 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+											{project.title}
+										</h3>
+										<p className="text-xs leading-relaxed text-zinc-500 dark:text-zinc-400 line-clamp-3">
+											{project.description}
+										</p>
+									</div>
 
 									{/* Tech Stack Tags */}
-									<div className="flex flex-wrap gap-1.5 mt-auto">
+									<div className="flex flex-wrap gap-1.5 mt-auto pt-2">
 										{project.tags.map((tag) => (
 											<span
 												key={tag}
-												className="px-1.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-[10px] text-zinc-600 dark:text-zinc-400 font-mono"
+												className="px-2 py-1 rounded bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-800 text-[10px] text-zinc-600 dark:text-zinc-400 font-mono font-medium"
 											>
 												{tag}
 											</span>
@@ -493,21 +506,21 @@ export default function Portfolio() {
 									</div>
 
 									{/* Links */}
-									<div className="flex gap-2 pt-2">
+									<div className="flex gap-3 pt-2">
 										{project.link && (
 											<Button
 												variant="primary"
-												className="h-7 text-xs px-3 w-full gap-2"
+												className="h-8 text-xs px-4 w-full gap-2 rounded-lg"
 											>
-												<ExternalLink className="w-3 h-3" /> Website
+												<ExternalLink className="w-3.5 h-3.5" /> Website
 											</Button>
 										)}
 										{project.github && (
 											<Button
 												variant="outline"
-												className="h-7 text-xs px-3 w-full gap-2"
+												className="h-8 text-xs px-4 w-full gap-2 rounded-lg"
 											>
-												<Github className="w-3 h-3" /> Source
+												<Github className="w-3.5 h-3.5" /> Source
 											</Button>
 										)}
 									</div>
@@ -518,11 +531,10 @@ export default function Portfolio() {
 				</section>
 
 				{/* --- Footer / Contact --- */}
-				<section className="flex flex-col items-center justify-center space-y-8 pt-12 pb-20">
+				<section className="flex flex-col items-center justify-center space-y-8 pt-12 pb-20 border-t border-zinc-100 dark:border-zinc-900/50">
 					<div className="text-center space-y-2">
-						<Badge className="mb-4">Contact</Badge>
-						<h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-							Lets get in touch!
+						<h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-zinc-900 dark:text-zinc-100">
+							Let&apos;s get in touch!
 						</h2>
 						<p className="text-zinc-500 dark:text-zinc-400 max-w-xs mx-auto text-sm">
 							Open to opportunities in Backend Engineering and Cloud
@@ -536,21 +548,24 @@ export default function Portfolio() {
 							target="_blank"
 							rel="noreferrer"
 						>
-							<Button variant="outline" className="rounded-full h-12 w-12 p-0">
-								<Linkedin className="h-5 w-5" />
+							<Button
+								variant="outline"
+								className="rounded-full h-12 w-12 p-0 hover:border-zinc-400 dark:hover:border-zinc-500"
+							>
+								<Linkedin className="h-5 w-5" strokeWidth={0} />
 							</Button>
 						</a>
 						<a href={`mailto:${PORTFOLIO_DATA.personal.email}`}>
 							<Button
 								variant="primary"
-								className="rounded-full h-12 px-6 gap-2"
+								className="rounded-full h-12 px-8 gap-2 shadow-lg hover:shadow-xl transition-all"
 							>
-								<Mail className="h-4 w-4" /> Send Email
+								<Mail className="h-4 w-4" /> Email Me
 							</Button>
 						</a>
 					</div>
 
-					<div className="pt-10 text-xs text-zinc-400 dark:text-zinc-600 font-mono">
+					<div className="pt-8 text-xs text-zinc-400 dark:text-zinc-600 font-mono">
 						© 2026 {PORTFOLIO_DATA.personal.name}. Built with Next.js &
 						Tailwind.
 					</div>
