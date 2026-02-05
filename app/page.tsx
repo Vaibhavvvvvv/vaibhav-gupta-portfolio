@@ -43,9 +43,8 @@ const PORTFOLIO_DATA = {
 		tagline: "Python Backend Developer & Microservices Specialist",
 		location: "Noida, India",
 		email: "guptavaibhav2014@gmail.com",
-		linkedin: "https://linkedin.com/in/vaibhavgupta",
-		github: "https://github.com",
-		twitter: "https://twitter.com",
+		linkedin: "https://www.linkedin.com/in/vaibhav-gupta73/",
+		github: "https://github.comhttps://github.com/Vaibhavvvvvv",
 		resume: "/resume.pdf", // Placeholder path
 		avatar: "/vaibav.png",
 		about:
@@ -552,7 +551,7 @@ export default function Portfolio() {
 								variant="outline"
 								className="rounded-full h-12 w-12 p-0 hover:border-zinc-400 dark:hover:border-zinc-500"
 							>
-								<Linkedin className="h-5 w-5" strokeWidth={0} />
+								<Linkedin className="h-5 w-5" />
 							</Button>
 						</a>
 						<a href={`mailto:${PORTFOLIO_DATA.personal.email}`}>
